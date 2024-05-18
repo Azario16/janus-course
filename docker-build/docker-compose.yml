@@ -1,0 +1,74 @@
+# docker-compose -p janus-net up
+
+version: "3"
+services:
+  janus-client:
+    build:
+      context: .
+      dockerfile: ../janus-client/docker/Dockerfile
+    image: debian-11
+    container_name: janus-client
+    ports:
+      - 8080:4200
+    volumes:
+      - ../janus-client/:/app
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    networks:
+      - janus-net
+    command: ng serve --host 0.0.0.0 --watch --poll 2000
+  janus-backend:
+    build:
+      context: .
+      dockerfile: ../janus-backend/docker/Dockerfile
+    container_name: janus-backend
+    ports:
+      - 8081:8000
+    volumes:
+      - ../janus-backend/:/opt/app
+      - ../janus-backend/docker/debug-backend/20-xdebug.ini:/usr/local/etc/php/conf.d/20-xdebug.ini
+    working_dir: /opt/app
+    stdin_open: true
+    tty: true
+    networks:
+      - janus-net
+  janus-postgres:
+    image: postgres
+    container_name: janus-postgres
+    environment:
+      - POSTGRES_DB=janus
+      - POSTGRES_USER=janus
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - janus-net
+  janus-mediaserver:
+    image: janus-gateway
+    container_name: janus-mediaserver
+    ports:
+      - "127.0.0.1:5002:5002/udp"
+      - "127.0.0.1:5003:5003/udp"
+      - "127.0.0.1:5004:5004/udp" 
+      - '8554:8554'
+      - '8005:8005'
+      - '8006:8006'
+      - '8007:8007'
+      - '8008:8008'
+      - '5201:5201/udp'
+      - '5201:5201'
+    build:
+      context: .
+      dockerfile: ../janus-mediaserver/docker/Dockerfile
+    volumes:
+      - ../janus-records-rooms/:/opt/record 
+      - ../janus-mediaserver/conf:/var/janus/janus/etc/janus
+      # - ../janus-mediaserver/plugins:/var/janus/janus/lib/janus/plugins
+      - ../rtp-test:/opt/rtp-test 
+      - ../janus-plugin-hello-world:/janus-plugin-hello-world
+    networks: 
+      - janus-net
+networks:
+  janus-net:

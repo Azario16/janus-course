@@ -1,0 +1,43 @@
+$utilities_width: (
+  width: (
+    70-percent: 70%,
+  ),
+);
+
+@each $nameProperty, $arrayProperty in $utilities_width {
+  @each $nameValue, $value in $arrayProperty {
+    .w-#{$nameValue} {
+      #{$nameProperty}: $value;
+    }
+  }
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+.display-g {
+  display: grid;
+}
+
+.display-inline-f {
+  display: inline-flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+  flex-direction: row;
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+  display: flex;
+}

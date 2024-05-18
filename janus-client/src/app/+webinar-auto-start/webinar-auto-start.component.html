@@ -1,0 +1,74 @@
+<p>webinar</p>
+
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>pluginId</mat-label>
+    <input matInput [formControl]="pluginId">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>streamId</mat-label>
+    <input matInput [formControl]="streamId">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>roomID</mat-label>
+    <input matInput [formControl]="roomIdControl">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>pinId</mat-label>
+    <input matInput [formControl]="pinIdControl">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>video server</mat-label>
+    <input matInput
+      [formControl]="videosServerControl"
+    >
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>rtp Forwarding Audio Port</mat-label>
+    <input matInput
+      [formControl]="rtpForwardingAudioPort"
+    >
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>rtp Forwarding Video Port</mat-label>
+    <input matInput
+      [formControl]="rtpForwardingVideoPort"
+    >
+  </mat-form-field>
+</form>
+
+<button mat-button color="primary" (click)="connect()">connect</button>
+<button mat-button color="primary" (click)="createRoom()">createRoom</button>
+<!-- <button mat-button color="primary" (click)="joinRoom()">joinRoom</button> -->
+<button mat-button color="primary" (click)="initVideoCall()">initVideoCall</button>
+<button mat-button color="primary" (click)="createRTP()">createRTP</button>
+<button mat-button color="primary" (click)="getList()">getList</button>
+<button mat-button color="primary" (click)="requestWatch()">requestWatch</button>
+<button mat-button color="primary" (click)="requestInfo()">requestInfo</button>
+<button mat-button color="primary" (click)="start()">start</button>
+
+<button mat-button color="primary" (click)="sendConfig()">sendMessage</button>
+<button mat-button color="primary" (click)="hangUp()">hangUp</button>
+
+
+<div *ngFor="let element of remoteStreamList$ | async">
+  <label>{{ element.id }}</label>
+  <!-- <video #videoPlayer [srcObject]="element" controls muted autoplay playsinline></video> -->
+
+  <div *ngIf="element.kind === 'video'">
+    <video #videoPlayer [srcObject]="element.mediaStream" controls muted autoplay playsinline></video>
+  </div>
+  <div *ngIf="element.kind === 'audio'">
+    <audio #audioPlayer [srcObject]="element.mediaStream" controls muted autoplay></audio>
+  </div>
+
+</div>
+
+
+

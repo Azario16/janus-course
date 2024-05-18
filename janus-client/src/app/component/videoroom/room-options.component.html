@@ -1,0 +1,26 @@
+<div class="square-container">
+  <div class="title">
+    <p>Video room plugin</p>
+  </div>
+  <div class="title">
+    <p>room option</p>
+  </div>
+  <div>
+    <button mat-button color="primary" (click)="connect()">connect</button>
+    <button mat-button color="primary" (click)="createRoom()">createRoom</button>
+    <button mat-button color="primary" (click)="joinRoom()">joinRoom</button>
+    <button mat-button color="primary" (click)="destroyRoom()">destroyRoom</button>
+    <button mat-button color="primary" (click)="detachPlugin()">detachPlugin</button>
+    <button mat-button color="primary" (click)="hangUp()">hangUp</button>
+  </div>
+
+  <div class="title">
+    <p>video option</p>
+  </div>
+  <div>
+    <button mat-button color="primary" (click)="initVideoCall()">initVideoCall</button>
+    <button mat-button color="primary" (click)="forwardRtp()">forwardRtp</button>
+    <button mat-button color="primary" (click)="sendConfig()">sendConfig</button>
+    <button mat-button color="primary" (click)="listForwarders()">listForwarders</button>
+  </div>
+</div>

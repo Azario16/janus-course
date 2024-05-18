@@ -1,0 +1,30 @@
+<p>webinar</p>
+
+<!-- <app-form-field></app-form-field> -->
+<app-webinar-form-field></app-webinar-form-field>
+
+<button mat-button color="primary" (click)="connect()">connect</button>
+<button mat-button color="primary" (click)="createRTP()">createRTP</button>
+<button mat-button color="primary" (click)="getList()">getList</button>
+<button mat-button color="primary" (click)="requestWatch()">requestWatch</button>
+<button mat-button color="primary" (click)="requestInfo()">requestInfo</button>
+<button mat-button color="primary" (click)="start()">start</button>
+
+<button mat-button color="primary" (click)="sendConfig()">sendMessage</button>
+
+
+<div *ngFor="let element of remoteStreamList$ | async">
+  <label>{{ element.id }}</label>
+  <!-- <video #videoPlayer [srcObject]="element" controls muted autoplay playsinline></video> -->
+
+  <div *ngIf="element.kind === 'video'">
+    <video #videoPlayer [srcObject]="element.mediaStream" controls muted autoplay playsinline></video>
+  </div>
+  <div *ngIf="element.kind === 'audio'">
+    <audio #audioPlayer [srcObject]="element.mediaStream" controls muted autoplay></audio>
+  </div>
+
+</div>
+
+
+

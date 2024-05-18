@@ -1,0 +1,20 @@
+<app-eventsave></app-eventsave>
+
+<p>video-room-subscribe works!</p>
+
+<app-form-field></app-form-field>
+<app-room-options></app-room-options>
+<app-record-options></app-record-options>
+
+<div *ngFor="let element of remoteStreamList$ | async">
+  <label>{{ element.id }}</label>
+  <div *ngIf="element.kind === 'video'">
+    <video #videoPlayer [srcObject]="element.mediaStream" controls muted autoplay playsinline></video>
+  </div>
+  <div *ngIf="element.kind === 'audio'">
+    <audio #audioPlayer [srcObject]="element.mediaStream" controls muted autoplay></audio>
+  </div>
+</div>
+
+
+
